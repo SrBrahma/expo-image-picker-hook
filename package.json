@@ -1,23 +1,27 @@
 {
+  "name": "expo-image-picker-hook",
   "version": "1.0.0",
   "description": "Convenient hook for expo-image-picker",
-  "main": "./lib/index.js",
-  "scripts": {
-    "test": "echo \"No test specified.\"",
-    "lint": "tsc --noemit && eslint --fix \"src/**\"",
-    "clean": "rimraf lib",
-    "build": "npm run clean && tsc",
-    "prepublishOnly": "npm run lint && npm run test",
-    "prepare": "npm run build",
-    "start": "npm run watch"
-  },
   "keywords": [],
-  "author": "SrBrahma",
+  "homepage": "https://github.com/SrBrahma/expo-image-picker-hook#readme",
+  "bugs": "https://github.com/SrBrahma/expo-image-picker-hook/issues",
+  "repository": "github:SrBrahma/expo-image-picker-hook",
   "license": "MIT",
+  "author": "SrBrahma",
+  "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "files": [
     "/lib"
   ],
+  "scripts": {
+    "build": "npm run clean && tsc",
+    "clean": "rimraf lib",
+    "lint": "tsc --noemit && eslint --fix \"src/**\"",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run lint && npm run test",
+    "start": "npm run watch",
+    "test": "echo \"No test specified.\""
+  },
   "devDependencies": {
     "@types/node": "^17.0.42",
     "@types/react-native": "*",
@@ -28,12 +32,8 @@
     "rimraf": "^3.0.2",
     "typescript": "^4.7.3"
   },
-  "packageManager": "yarn@3.2.1",
-  "name": "expo-image-picker-hook",
-  "homepage": "https://github.com/SrBrahma/expo-image-picker-hook#readme",
-  "bugs": "https://github.com/SrBrahma/expo-image-picker-hook/issues",
-  "repository": "github:SrBrahma/expo-image-picker-hook",
   "peerDependencies": {
     "expo-image-picker": "*"
-  }
+  },
+  "packageManager": "yarn@3.2.1"
 }
