@@ -29,25 +29,18 @@ function MyComponent() {
     permissionNotGrantedText: 'You need to give the app permission to select the image.',
   })
 
-  const pick = async () => {
-    try {
-      ImagePicker.pick()
-    } catch (err) {
-      Alert.alert('Error', err.message)
-    }
+  const pick = () => {
+    ImagePicker.pick().catch(err => Alert.alert('Error', err.message))
   }
 
   const upload = () => {
-    try {
-      ImagePicker.upload({fun: (image) => myApi.setImage(image)}, {mode: 'base64'})
-    } catch (err) {
-      Alert.alert('Error', err.message)
-    }
+    ImagePicker.upload({ fun: (image) => myApi.uploadImage(image) }, { mode: 'base64' })
+      .catch(err => Alert.alert('Error', err.message))
   }
 
   return (
     <View>
-      <Image source={{uri: ImagePicker.imageUri}}>
+      <Image source={{ uri: ImagePicker.imageUri }}>
       <Button onPress={pick}>
       <Button onPress={upload} disabled={!ImagePicker.isPicked}>
     </View>
