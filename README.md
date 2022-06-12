@@ -5,7 +5,7 @@
 [![npm](https://img.shields.io/npm/v/expo-image-picker-hook)](https://www.npmjs.com/package/expo-image-picker-hook)
 [![TypeScript](https://badgen.net/npm/types/env-var)](http://www.typescriptlang.org/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
-[![npm](https://img.shields.io/npm/dm/expo-image-picker-hook)](https://www.npmjs.com/package/expo-image-picker-hook)
+<!-- [![npm](https://img.shields.io/npm/dm/expo-image-picker-hook)](https://www.npmjs.com/package/expo-image-picker-hook) -->
 </div>
 
 # expo-image-picker-hook
