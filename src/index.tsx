@@ -27,16 +27,15 @@ type UploadImageOptions = {
   mode?: 'blob' | 'base64';
   /** Call reset() on successful upload. Useful for disabling upload button and cleaning a form's dirtiness.
    * @default true */
-  resetImageOnSuccess?: boolean;
+  resetOnSuccess?: boolean;
 };
 
 export type UseImagePickerReturn = {
-  /** The URI of the selected image */
-  imageUri: string | null;
-  /** Same as `!!imageUri`, but prettier. */
+  /** The URI of the selected media */
+  uri: string | undefined;
+  /** Same as `!!uri`, but prettier. */
   isPicked: boolean;
-
-  /** Picks an image.
+  /** Picks a media.
    *
    * You must try/catch this as it may throw errors like if user doesn't provide the permission.
    *
@@ -47,22 +46,21 @@ export type UseImagePickerReturn = {
       uploadFunction: (data: any) => any;
     };
   }) => Promise<void>;
-
-  /** Uploads the picked image.
+  /** Uploads the picked media.
    *
    * If you want to pick and immediatly upload it, use pickImage() with uploadAfterPick option,
    * as if you call pick() and upload(), the image's state may not be yet updated.
    *
    * @throws */
   upload: (fun: (data: any) => any, opts?: UploadImageOptions) => Promise<any>;
-  /** Resets the picked image. Automatically called if `resetOnUpload`. */
+  /** Resets the picked media. Automatically called if `resetOnUpload`. */
   reset: () => void;
 };
 
 
-async function uploadImageByUri({ imageUri, fun, mode }: {
+async function uploadImageByUri({ uri, fun, mode }: {
   fun: (data: any) => any;
-  imageUri: string;
+  uri: string;
   mode: 'blob' | 'base64';
 }) {
   const blob = await new Promise((resolve, reject) => {
@@ -75,7 +73,7 @@ async function uploadImageByUri({ imageUri, fun, mode }: {
       reject(new TypeError('Network request failed'));
     };
     xhr.responseType = 'blob';
-    xhr.open('GET', imageUri, true);
+    xhr.open('GET', uri, true);
     xhr.send(null);
   });
 
@@ -99,21 +97,25 @@ export function useImagePicker({
   permissionNotGrantedText, ...rest
 }: UseImagePickerProps = {}): UseImagePickerReturn {
 
-  const [imageUri, setImage] = useState<null | string>(null);
+  const [uri, setImage] = useState<string | undefined>(undefined); // Undefined as <Image source={{uri}} is string | undefined.
 
-  const uploadImageCore = useCallback(async ({ fun, opts, imageUri }: {
+  const reset = useCallback(() => {
+    setImage(undefined);
+  }, []);
+
+  const uploadImageCore = useCallback(async ({ fun, opts, uri }: {
     fun: (data: any) => any;
     opts?: UploadImageOptions;
-    imageUri: string | null;
+    uri: string | undefined;
   }) => {
-    if (!imageUri)
+    if (!uri)
       throw new Error('Image not set!');
 
-    await uploadImageByUri({ fun, imageUri, mode: opts?.mode ?? 'blob' });
+    await uploadImageByUri({ fun, uri, mode: opts?.mode ?? 'blob' });
 
-    if (opts?.resetImageOnSuccess ?? true)
-      setImage(null);
-  }, []);
+    if (opts?.resetOnSuccess ?? true)
+      reset();
+  }, [reset]);
 
 
   const pick = useCallback<UseImagePickerReturn['pick']>(async (opts = {}) => {
@@ -128,34 +130,29 @@ export function useImagePicker({
     // Do nothing if cancelled
     if (result.cancelled) return;
 
-    const imageUri = result.uri;
+    const uri = result.uri;
     if (uploadAfterPick) {
       const { uploadFunction, ...opts } = uploadAfterPick;
       await uploadImageCore({
         fun: uploadFunction,
-        imageUri,
+        uri,
         opts,
       });
     }
     else
-      setImage(imageUri);
+      setImage(uri);
   }, [rest, uploadImageCore]);
 
-
   const upload = useCallback<UseImagePickerReturn['upload']>(async (fun, opts) => {
-    await uploadImageCore({ fun, opts, imageUri });
-  }, [imageUri, uploadImageCore]);
-
-  const reset = useCallback(() => {
-    setImage(null);
-  }, []);
+    await uploadImageCore({ fun, opts, uri });
+  }, [uri, uploadImageCore]);
 
 
   return {
-    imageUri,
+    uri,
     pick,
     upload,
-    isPicked: !!imageUri,
+    isPicked: !!uri,
     reset,
   };
 }
