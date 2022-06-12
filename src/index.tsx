@@ -44,7 +44,7 @@ export type UseImagePickerReturn = {
   pick: (opts?: {
     /** If it shall immediatly upload after picking the image. */
     uploadAfterPick?: UploadImageOptions & {
-      uploadFunction: (data: any) => Promise<any>;
+      uploadFunction: (data: any) => any;
     };
   }) => Promise<void>;
 
@@ -54,14 +54,14 @@ export type UseImagePickerReturn = {
    * as if you call pick() and upload(), the image's state may not be yet updated.
    *
    * @throws */
-  upload: (fun: (data: any) => Promise<any>, opts?: UploadImageOptions) => Promise<any>;
+  upload: (fun: (data: any) => any, opts?: UploadImageOptions) => Promise<any>;
   /** Resets the picked image. Automatically called if `resetOnUpload`. */
   reset: () => void;
 };
 
 
 async function uploadImageByUri({ imageUri, fun, mode }: {
-  fun: (data: any) => Promise<any>;
+  fun: (data: any) => any;
   imageUri: string;
   mode: 'blob' | 'base64';
 }) {
@@ -102,7 +102,7 @@ export function useImagePicker({
   const [imageUri, setImage] = useState<null | string>(null);
 
   const uploadImageCore = useCallback(async ({ fun, opts, imageUri }: {
-    fun: (data: any) => Promise<any>;
+    fun: (data: any) => any;
     opts?: UploadImageOptions;
     imageUri: string | null;
   }) => {
