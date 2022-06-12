@@ -41,7 +41,7 @@ function MyComponent() {
 
   return (
     <View>
-      <Image source={{ uri: ImagePicker.imageUri }}>
+      <Image source={{ uri: ImagePicker.uri }}>
       <Button onPress={pick}>
       <Button onPress={upload} disabled={!ImagePicker.isPicked}>
     </View>
