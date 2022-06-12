@@ -30,7 +30,8 @@ function MyComponent() {
   })
 
   const pick = () => {
-    ImagePicker.pick().catch(err => Alert.alert('Error', err.message))
+    ImagePicker.pick()
+      .catch(err => Alert.alert('Error', err.message))
   }
 
   const upload = () => {
