@@ -1,0 +1,39 @@
+{
+  "version": "1.0.0",
+  "description": "Convenient hook for expo-image-picker",
+  "main": "./lib/index.js",
+  "scripts": {
+    "test": "echo \"No test specified.\"",
+    "lint": "tsc --noemit && eslint --fix \"src/**\"",
+    "clean": "rimraf lib",
+    "build": "npm run clean && tsc",
+    "prepublishOnly": "npm run lint && npm run test",
+    "prepare": "npm run build",
+    "start": "npm run watch"
+  },
+  "keywords": [],
+  "author": "SrBrahma",
+  "license": "MIT",
+  "types": "./lib/index.d.ts",
+  "files": [
+    "/lib"
+  ],
+  "devDependencies": {
+    "@types/node": "^17.0.42",
+    "@types/react-native": "*",
+    "eslint-config-gev": "^2.33.0",
+    "expo-image-picker": "^13.1.1",
+    "react": "*",
+    "react-native": "*",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.7.3"
+  },
+  "packageManager": "yarn@3.2.1",
+  "name": "expo-image-picker-hook",
+  "homepage": "https://github.com/SrBrahma/expo-image-picker-hook#readme",
+  "bugs": "https://github.com/SrBrahma/expo-image-picker-hook/issues",
+  "repository": "github:SrBrahma/expo-image-picker-hook",
+  "peerDependencies": {
+    "expo-image-picker": "*"
+  }
+}
