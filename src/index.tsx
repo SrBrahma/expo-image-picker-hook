@@ -146,11 +146,16 @@ export function useImagePicker({
     await uploadImageCore({ fun, opts, imageUri });
   }, [imageUri, uploadImageCore]);
 
+  const reset = useCallback(() => {
+    setImage(null);
+  }, []);
+
+
   return {
     imageUri,
     pick,
     upload,
     isPicked: !!imageUri,
-    reset: () => setImage(null),
+    reset,
   };
 }
